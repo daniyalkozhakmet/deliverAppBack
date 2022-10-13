@@ -79,10 +79,11 @@ class StoreSerializerWithBooks(serializers.ModelSerializer):
     books=serializers.SerializerMethodField(read_only=True)
     city=serializers.SerializerMethodField(read_only=True)
     class Meta:
-        model=Category
-        depth=1
-        fields=['id','name','books','rating','review','city']
+        model=Store
+        # depth=1
+        fields=['id','name','books','rating','review','city','image']
     def get_books(self,obj):
+        print("Hello")
         books=Book.objects.filter(store=obj.id)
         serilizer=BookSerializerWithoutStore(books,many=True)
         return serilizer.data

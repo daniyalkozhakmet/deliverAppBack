@@ -51,6 +51,7 @@ class StoreItem(APIView):
     def get(self,request,pk):
         try:
             store=Store.objects.get(id=pk)
+            books=Book.objects.filter(store=store.id)
             serializer=StoreSerializerWithBooks(store,many=False)
             return Response(serializer.data)
         except:
