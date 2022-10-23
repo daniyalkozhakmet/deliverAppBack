@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    'core1',
     'corsheaders',
     'storages',
 ]
@@ -89,7 +89,7 @@ MEDIA_ROOT='static/images'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'deliverApp.core.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'core1.utils.custom_exception_handler'
 }
 
 DATABASES = {
@@ -163,3 +163,5 @@ AWS_QUERYSTRING_AUTH=False
 # AWS_LOCATION = 'static'
 # STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AUTH_USER_MODEL = 'core1.CustomUser'

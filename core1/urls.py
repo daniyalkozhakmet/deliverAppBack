@@ -1,5 +1,5 @@
 from django.urls import path,include
-from core import views
+from core1 import views
 urlpatterns = [
     path('book/',views.ListBooks.as_view()),
     path('book/<str:pk>',views.ListBookItem.as_view()),

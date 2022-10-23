@@ -19,7 +19,7 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model=Book
         # depth=1
-        fields=['id','name','image','transaction','store','category']
+        fields=['id','name','image','transaction','store','category','description','rating']
     def get_category(self,obj):
         serializer=CategorySerializer(obj.category,many=True)
         return serializer.data
@@ -35,7 +35,6 @@ class StoreSerializer(serializers.ModelSerializer):
         model=Store
         fields='__all__'
     def get_city(self,obj):
-        print(obj.city)
         serializer=CitySerializer(obj.city,many=False)
         return serializer.data
 # For category
@@ -45,7 +44,7 @@ class BookSerializerWithoutCategory(serializers.ModelSerializer):
     class Meta:
         model=Book
         # depth=1
-        fields=['id','name','image','transaction','store',]
+        fields=['id','name','image','transaction','store','description','rating','price']
     def get_transaction(self,obj):
         serializer=TransactionSerializer(obj.transaction.all(),many=True)
         return serializer.data
@@ -68,12 +67,12 @@ class BookSerializerWithoutStore(serializers.ModelSerializer):
     class Meta:
         model=Book
         # depth=1
-        fields=['id','name','image','transaction','category']
+        fields=['id','name','image','transaction','category','description','rating','price']
     def get_category(self,obj):
         serializer=CategorySerializer(obj.category,many=True)
         return serializer.data
     def get_transaction(self,obj):
-        serializer=TransactionSerializer(obj.transaction.all(),many=True)
+        serializer=TransactionSerializer(obj.transaction.name,many=True)
         return serializer.data
 class StoreSerializerWithBooks(serializers.ModelSerializer):
     books=serializers.SerializerMethodField(read_only=True)
@@ -81,13 +80,11 @@ class StoreSerializerWithBooks(serializers.ModelSerializer):
     class Meta:
         model=Store
         # depth=1
-        fields=['id','name','books','rating','review','city','image']
+        fields=['id','name','books','rating','review','city','image','description']
     def get_books(self,obj):
-        print("Hello")
         books=Book.objects.filter(store=obj.id)
         serilizer=BookSerializerWithoutStore(books,many=True)
         return serilizer.data
     def get_city(self,obj):
-        print(obj.city)
         serializer=CitySerializer(obj.city,many=False)
         return serializer.data
